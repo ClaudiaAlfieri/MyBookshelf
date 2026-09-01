@@ -7,4 +7,4 @@ Route::view('/','home');
 
 Route::view('/books','books.index');
 
-Route::view('/genre','genre.index');
+Route::view('/genres','genres.index');
