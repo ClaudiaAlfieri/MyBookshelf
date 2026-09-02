@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg navbar-dark navbar-mybs shadow-sm sticky-top">
     <div class="container">
-        <a class="navbar-brand" href="base.html">
+        <a class="navbar-brand" href="{{route('home')}}">
             <i class="bi bi-bookmark-star me-2"></i>
             MyBookshelf
         </a>
@@ -20,19 +20,19 @@
         <div class="collapse navbar-collapse" id="mainNavbar">
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item">
-                    <a class="nav-link active" href="base.html">
+                    <a class="nav-link active" href="{{route('home')}}">
                         <i class="bi bi-house me-1"></i>
                         Início
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="livros.html">
+                    <a class="nav-link" href="{{route('books.index')}}">
                         <i class="bi bi-journal-bookmark me-1"></i>
                         Meus Livros
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="generos.html">
+                    <a class="nav-link" href="{{route('genres.index')}}">
                         <i class="bi bi-tags me-1"></i>
                         Géneros
                     </a>
