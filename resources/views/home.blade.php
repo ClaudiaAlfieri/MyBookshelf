@@ -20,11 +20,11 @@
                         </p>
 
                         <div class="d-flex flex-wrap gap-2 mb-4">
-                            <a href="livros-create.html" class="btn btn-brand">
+                            <a href="{{route('books.create')}}" class="btn btn-brand">
                                 <i class="bi bi-plus-lg me-2"></i>
                                 Adicionar Livro
                             </a>
-                            <a href="livros.html" class="btn btn-outline-brand">
+                            <a href="{{route('books.index')}}" class="btn btn-outline-brand">
                                 <i class="bi bi-journal-bookmark me-2"></i>
                                 Ver a Estante
                             </a>
@@ -77,7 +77,7 @@
                                 Veja tudo o que já leu, com autor, ano de leitura
                                 e a nota que deu a cada livro.
                             </p>
-                            <a href="livros.html" class="btn btn-outline-brand">
+                            <a href="{{route('books.index')}}" class="btn btn-outline-brand">
                                 Ver estante
                                 <i class="bi bi-arrow-right ms-1"></i>
                             </a>
@@ -96,7 +96,7 @@
                                 Organize os seus livros por género
                                 e acompanhe o que mais costuma ler.
                             </p>
-                            <a href="generos.html" class="btn btn-outline-brand">
+                            <a href="{{route('genres.index')}}" class="btn btn-outline-brand">
                                 Ver géneros
                                 <i class="bi bi-arrow-right ms-1"></i>
                             </a>
