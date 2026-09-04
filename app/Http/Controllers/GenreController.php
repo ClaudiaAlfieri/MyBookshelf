@@ -12,7 +12,9 @@ class GenreController extends Controller
      */
     public function index()
     {
-        //
+        $genres = Genre::withCount('books')->get();
+        //dd($genres);
+        return view('genres.index', compact('genres'));
     }
 
     /**
@@ -31,13 +33,6 @@ class GenreController extends Controller
         //
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Genre $genre)
-    {
-        //
-    }
 
     /**
      * Show the form for editing the specified resource.
