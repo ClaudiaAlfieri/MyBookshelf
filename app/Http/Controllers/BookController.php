@@ -1,8 +1,9 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Models\Genre;
 use App\Models\Book;
+
 use Illuminate\Http\Request;
 
 class BookController extends Controller
@@ -12,7 +13,10 @@ class BookController extends Controller
      */
     public function index()
     {
-        //
+        $books  = Book::with('genre')->latest()->get();
+        $genres = Genre::all();
+
+        return view('books.index', compact('books', 'genres'));
     }
 
     /**
