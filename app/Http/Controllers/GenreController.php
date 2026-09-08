@@ -72,6 +72,11 @@ class GenreController extends Controller
      */
     public function destroy(Genre $genre)
     {
-        //
+        $nome = $genre->name;
+        $genre->delete();
+
+        return redirect()
+            ->route('genres.index')
+            ->with('success', "O género {$nome} foi removido com sucesso!");
     }
 }
