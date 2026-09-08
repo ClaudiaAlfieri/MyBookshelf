@@ -30,7 +30,15 @@ class GenreController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+        ]);
+
+        $genre = Genre::create($validated);
+
+        return redirect()
+            ->route('genres.index')
+            ->with('success', "O género {$genre->name} foi criado com sucesso, com o ID {$genre->id}!");
     }
 
 
