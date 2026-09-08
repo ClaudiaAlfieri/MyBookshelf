@@ -55,8 +55,17 @@ class GenreController extends Controller
      */
     public function update(Request $request, Genre $genre)
     {
-        //
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+        ]);
+
+        $genre->update($validated);
+
+        return redirect()
+            ->route('genres.index')
+            ->with('success', "O género {$genre->name} foi atualizado com sucesso!");
     }
+
 
     /**
      * Remove the specified resource from storage.
