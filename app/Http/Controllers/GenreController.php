@@ -47,7 +47,7 @@ class GenreController extends Controller
      */
     public function edit(Genre $genre)
     {
-        //
+        return view('genres.edit', compact('genre'));
     }
 
     /**
