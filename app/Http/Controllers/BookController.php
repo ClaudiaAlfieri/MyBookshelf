@@ -96,6 +96,11 @@ class BookController extends Controller
      */
     public function destroy(Book $book)
     {
-        //
+        $titulo = $book->title;
+        $book->delete();
+
+        return redirect()
+            ->route('books.index')
+            ->with('success', "O livro {$titulo} foi removido com sucesso!");
     }
 }
