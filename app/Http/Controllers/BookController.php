@@ -24,7 +24,9 @@ class BookController extends Controller
      */
     public function create()
     {
-        //
+        $genres = Genre::all();
+
+        return view('books.create', compact('genres'));
     }
 
     /**
