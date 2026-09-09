@@ -75,7 +75,20 @@ class BookController extends Controller
      */
     public function update(Request $request, Book $book)
     {
-        //
+        $validated = $request->validate([
+            'title'      => 'required|string|max:255',
+            'author'     => 'required|string|max:255',
+            'genre_id'   => 'required|exists:genres,id',
+            'year_read'  => 'required|integer|min:1900|max:' . date('Y'),
+            'rating'     => 'required|integer|min:1|max:5',
+            'notes'      => 'nullable|string',
+        ]);
+
+        $book->update($validated);
+
+        return redirect()
+            ->route('books.index')
+            ->with('success', "O livro {$book->title} foi atualizado com sucesso!");
     }
 
     /**
