@@ -2,89 +2,140 @@
 
 @section('content')
 
-<main>
-    <div class="container py-5">
+    <main>
+        <div class="container py-5">
 
-        <nav aria-label="breadcrumb">
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="livros.html">Meus Livros</a></li>
-                <li class="breadcrumb-item"><a href="livros-show.html">Ensaio sobre a Cegueira</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Editar</li>
-            </ol>
-        </nav>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{{ route('books.index') }}">Meus Livros</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('books.show', $book) }}">{{ $book->title }}</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Editar</li>
+                </ol>
+            </nav>
 
-        <h1 class="h3 mb-4">Editar Livro</h1>
+            <h1 class="h3 mb-4">Editar Livro</h1>
 
-        <div class="panel">
-            <div class="card-body p-4 p-lg-5">
+            {{--Resumo dos erros--}}
 
-                <form action="#" method="POST">
+            @if($errors->any())
+                <div class="alert alert-danger" role="alert">
+                    <strong>Existem Erros no formulário</strong>
+                </div>
+            @endif
 
-                    <p class="form-section-title">Detalhes do livro</p>
+            <div class="panel">
+                <div class="card-body p-4 p-lg-5">
 
-                    <div class="mb-3">
-                        <label for="titulo" class="form-label">Título</label>
-                        <input type="text" class="form-control" id="titulo" name="titulo" value="Ensaio sobre a Cegueira" required>
-                    </div>
+                    <form action="{{ route('books.update', $book) }}" method="POST">
+                        @csrf
+                        @method('PUT')
 
-                    <div class="mb-3">
-                        <label for="autor" class="form-label">Autor</label>
-                        <input type="text" class="form-control" id="autor" name="autor" value="José Saramago" required>
-                    </div>
+                        <p class="form-section-title">Detalhes do livro</p>
 
-                    <div class="row">
-                        <div class="col-md-6 mb-3">
-                            <label for="genero_id" class="form-label">Género</label>
-                            <select class="form-select" id="genero_id" name="genero_id" required>
-                                <option value="" disabled>Selecione um género</option>
-                                <option value="1" selected>Ficção</option><option value="2">Clássico</option><option value="3">Fantasia</option><option value="4">Poesia</option><option value="5">Distopia</option><option value="6">Infantil</option>
-                            </select>
+                        <div class="mb-3">
+                            <label for="title" class="form-label">Título</label>
+                            <input
+                                type="text"
+                                class="form-control @error('title') is-invalid @enderror"
+                                id="title"
+                                name="title"
+                                value="{{ old('title', $book->title) }}"
+                            >
+                            @error('title')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
                         </div>
 
-                        <div class="col-md-6 mb-3">
-                            <label for="ano_leitura" class="form-label">Ano que leu</label>
-                            <input type="number" class="form-control" id="ano_leitura" name="ano_leitura" value="2023" min="1900" max="2100" required>
+                        <div class="mb-3">
+                            <label for="author" class="form-label">Autor</label>
+                            <input
+                                type="text"
+                                class="form-control @error('author') is-invalid @enderror"
+                                id="author"
+                                name="author"
+                                value="{{ old('author', $book->author) }}"
+                            >
+                            @error('author')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
                         </div>
-                    </div>
 
-                    <p class="form-section-title mt-4">A minha leitura</p>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="genre_id" class="form-label">Género</label>
+                                <select class="form-select @error('genre_id') is-invalid @enderror" id="genre_id" name="genre_id">
+                                    <option value="" disabled>Selecione um género</option>
+                                    @foreach($genres as $genre)
+                                        <option value="{{ $genre->id }}" {{ old('genre_id', $book->genre_id) == $genre->id ? 'selected' : '' }}>
+                                            {{ $genre->name }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                                @error('genre_id')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
 
-                    <div class="mb-4">
-                        <label class="form-label d-block">Avaliação</label>
-                        <div class="star-rating">
-                            <input type="radio" id="star5" name="avaliacao" value="5">
-                            <label for="star5" title="5 estrelas"><i class="bi bi-star-fill"></i></label>
-                            <input type="radio" id="star4" name="avaliacao" value="4" checked>
-                            <label for="star4" title="4 estrelas"><i class="bi bi-star-fill"></i></label>
-                            <input type="radio" id="star3" name="avaliacao" value="3">
-                            <label for="star3" title="3 estrelas"><i class="bi bi-star-fill"></i></label>
-                            <input type="radio" id="star2" name="avaliacao" value="2">
-                            <label for="star2" title="2 estrelas"><i class="bi bi-star-fill"></i></label>
-                            <input type="radio" id="star1" name="avaliacao" value="1">
-                            <label for="star1" title="1 estrelas"><i class="bi bi-star-fill"></i></label>
+                            <div class="col-md-6 mb-3">
+                                <label for="year_read" class="form-label">Ano que leu</label>
+                                <input
+                                    type="number"
+                                    class="form-control @error('year_read') is-invalid @enderror"
+                                    id="year_read"
+                                    name="year_read"
+                                    value="{{ old('year_read', $book->year_read) }}"
+                                    min="1900"
+                                    max="2100"
+                                >
+                                @error('year_read')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="mb-4">
-                        <label for="notas" class="form-label">Notas / o que achei</label>
-                        <textarea class="form-control" id="notas" name="notas" rows="4" placeholder="Escreva a sua opinião sobre o livro...">Um livro que me marcou pela forma como retrata o comportamento humano em situações extremas. Difícil de largar.</textarea>
-                    </div>
+                        <p class="form-section-title mt-4">A minha leitura</p>
 
-                    <div class="d-flex justify-content-end gap-2">
-                        <a href="livros.html" class="btn btn-outline-secondary">Cancelar</a>
-                        <button type="submit" class="btn btn-brand">
-                            <i class="bi bi-check-lg me-1"></i>
-                            Atualizar Livro
-                        </button>
-                    </div>
+                        <div class="mb-4">
+                            <label class="form-label d-block">Avaliação</label>
+                            <div class="star-rating">
+                                @for($i = 5; $i >= 1; $i--)
+                                    <input type="radio" id="star{{ $i }}" name="rating" value="{{ $i }}" {{ old('rating', $book->rating) == $i ? 'checked' : '' }}>
+                                    <label for="star{{ $i }}" title="{{ $i }} estrelas"><i class="bi bi-star-fill"></i></label>
+                                @endfor
+                            </div>
+                            @error('rating')
+                            <div class="text-danger small mt-1">{{ $message }}</div>
+                            @enderror
+                        </div>
 
-                </form>
+                        <div class="mb-4">
+                            <label for="notes" class="form-label">Notas / o que achei</label>
+                            <textarea
+                                class="form-control @error('notes') is-invalid @enderror"
+                                id="notes"
+                                name="notes"
+                                rows="4"
+                            >{{ old('notes', $book->notes) }}</textarea>
+                            @error('notes')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
 
+                        <div class="d-flex justify-content-end gap-2">
+                            <a href="{{ route('books.index') }}" class="btn btn-outline-secondary">Cancelar</a>
+                            <button type="submit" class="btn btn-brand">
+                                <i class="bi bi-check-lg me-1"></i>
+                                Atualizar Livro
+                            </button>
+                        </div>
+
+                    </form>
+
+                </div>
             </div>
+
         </div>
 
-    </div>
-
-</main>
+    </main>
 
 @endsection
